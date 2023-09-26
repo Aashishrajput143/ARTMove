@@ -1,5 +1,6 @@
 from sys import flags
 from mainApp.models import Product
+from mainApp.models import Services
 from django import template
 
 register = template.Library()
@@ -24,7 +25,10 @@ def cartqty(request, num):
 def carttotal(request, num):
     cart = request.session.get('cart',None)
     if(cart):
-        p = Product.objects.get(id=int(cart[num][0]))
+        try:
+            p = Product.objects.get(id=int(cart[num][0]))
+        except:
+            p = Services.objects.get(id=int(cart[num][0]))
         return cart[num][1]*p.finalprice
     else:
         return ''
@@ -33,7 +37,10 @@ def carttotal(request, num):
 def cartproduct(request, num):
     cart = request.session.get('cart',None)
     if(cart):
-        p = Product.objects.get(id=int(cart[num][0]))
+        try:
+            p = Product.objects.get(id=int(cart[num][0]))
+        except:
+            p = Services.objects.get(id=int(cart[num][0]))
         return p
     else:
         return ''
@@ -42,7 +49,10 @@ def cartproduct(request, num):
 def cartname(request, num):
     cart = request.session.get('cart',None)
     if(cart):
-        p = Product.objects.get(id=int(cart[num][0]))
+        try:
+            p = Product.objects.get(id=int(cart[num][0]))
+        except:
+            p = Services.objects.get(id=int(cart[num][0]))
         return p.name
     else:
         return ''
@@ -51,7 +61,10 @@ def cartname(request, num):
 def cartprice(request, num):
     cart = request.session.get('cart',None)
     if(cart):
-        p = Product.objects.get(id=int(cart[num][0]))
+        try:
+            p = Product.objects.get(id=int(cart[num][0]))
+        except:
+            p = Services.objects.get(id=int(cart[num][0]))
         return p.finalprice
     else:
         return ''
@@ -61,7 +74,10 @@ def cartimage(request, num):
     cart = request.session.get('cart',None)
     if(cart):
         try:
-            p = Product.objects.get(id=int(cart[num][0]))
+            try:
+                p = Product.objects.get(id=int(cart[num][0]))
+            except:
+                p = Services.objects.get(id=int(cart[num][0]))
             return p.pic1.url
         except:
             pass

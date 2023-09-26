@@ -14,13 +14,33 @@ class SubcategoryAdmin(admin.ModelAdmin):
 class BrandAdmin(admin.ModelAdmin):
     list_display = ['id','name']
 
+@admin.register(Mainservices)
+class MainservicesAdmin(admin.ModelAdmin):
+    list_display = ['id','name']
+
+@admin.register(Subservices)
+class SubservicesAdmin(admin.ModelAdmin):
+    list_display = ['id','name']
+
+@admin.register(Brandservices)
+class BrandservicesAdmin(admin.ModelAdmin):
+    list_display = ['id','name']
+
 @admin.register(Seller)
 class SellerAdmin(admin.ModelAdmin):
     list_display = ['id','name','username','email','phone','addressline1','addressline2','addressline3','pin','city','state','pic']
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['id','name','maincategory','subcategory','brand','seller','baseprice','discount','finalprice','description','stock','pic1','pic2','pic3']
+    list_display = ['id','name','maincategory','subcategory','brand','seller','baseprice','discount','finalprice','size','description','stock','pic1','pic2','pic3']
+
+@admin.register(Services)
+class ServicesAdmin(admin.ModelAdmin):
+    list_display = ['id','name','maincategory','subcategory','brand','seller','baseprice','discount','finalprice','size','description','stock','pic1','pic2','pic3']
+
+@admin.register(Blog)
+class BlogAdmin(admin.ModelAdmin):
+    list_display = ['id','title','subtitle','description','excert','quotes','explain','date','pic','pic1','pic2']
 
 @admin.register(Buyer)
 class BuyerAdmin(admin.ModelAdmin):

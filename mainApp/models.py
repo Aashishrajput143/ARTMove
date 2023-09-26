@@ -22,7 +22,27 @@ class Brand(models.Model):
     def __str__(self):
         return self.name
 
+class Mainservices(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=20)
 
+    def __str__(self):
+        return self.name
+
+class Subservices(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
+
+class Brandservices(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
+    
 class Seller(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
@@ -36,6 +56,7 @@ class Seller(models.Model):
     city = models.CharField(max_length=50,default=None,null=True,blank=True)
     state = models.CharField(max_length=50,default=None,null=True,blank=True)
     pic = models.FileField(upload_to="images",default="noimage.jpg",null=True,blank=True)
+
 
     def __str__(self):
         return self.username
@@ -59,6 +80,42 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+class Services(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    maincategory = models.ForeignKey(Mainservices,on_delete=models.CASCADE)
+    subcategory = models.ForeignKey(Subservices,on_delete=models.CASCADE)
+    brand = models.ForeignKey(Brandservices,on_delete=models.CASCADE)
+    seller = models.CharField(max_length=500,default='Moonarty')
+    baseprice = models.IntegerField()
+    discount = models.IntegerField()
+    finalprice = models.IntegerField()
+    size = models.CharField(max_length=150)
+    description = models.TextField()
+    stock = models.CharField(max_length=20,default="In Stock")
+    pic1 = models.ImageField(upload_to="images",default="noimagep.jpg",null=True,blank=True)
+    pic2 = models.ImageField(upload_to="images",default="noimagep.jpg",null=True,blank=True)
+    pic3 = models.ImageField(upload_to="images",default="noimagep.jpg",null=True,blank=True)
+
+    def __str__(self):
+        return self.name
+    
+class Blog(models.Model):
+    id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=100)
+    subtitle = models.CharField(max_length=100)
+    description = models.TextField()
+    excert = models.TextField(default="")
+    quotes = models.TextField(default="")
+    explain = models.TextField(default="")
+    date = models.DateTimeField(auto_now=True)
+    pic = models.ImageField(upload_to="images",default="noimagep.jpg",null=True,blank=True)
+    pic1 = models.ImageField(upload_to="images",default="noimagep.jpg",null=True,blank=True)
+    pic2 = models.ImageField(upload_to="images",default="noimagep.jpg",null=True,blank=True)
+
+    def __str__(self):
+        return self.title
 
 class Buyer(models.Model):
     id = models.AutoField(primary_key=True)

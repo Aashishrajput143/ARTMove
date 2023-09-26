@@ -16,10 +16,8 @@ from .models import *
 
 def home(request):
     products = Product.objects.all()
-    title  = Product.objects.all()
-    product = products[:6:-1]
-    products = products[:8:-1]
-    title = title[:1:-1]
+    product = Product.objects.order_by('-id')[:6]
+    products = Product.objects.order_by('-id')[:8]
     if(request.method=='POST'):
         try:
             email = request.POST.get('email')
@@ -40,7 +38,7 @@ def home(request):
         except:
             pass
         return HttpResponseRedirect('/')
-    return render(request,"index.html",{'Product':product,'Products':products,'Title':title})
+    return render(request,"index.html",{'Product':product,'Products':products})
 
 def shoppage(request,mc,sc,br):
     maincategory = Maincategory.objects.all()
@@ -69,6 +67,33 @@ def shoppage(request,mc,sc,br):
     products = products[::-1]
     return render(request,"shop.html",{'Product':products,'Maincategory':maincategory,'Subcategory':subcategory,'Brand':brand,'mc':mc,'sc':sc,'br':br})
 
+def servicepage(request,mc,sc,br):
+    maincategory = Mainservices.objects.all()
+    subcategory = Subservices.objects.all()
+    brand = Brandservices.objects.all()
+    if(request.method=='POST'):
+        search = request.POST.get('search')
+        products = Services.objects.filter(Q(name__icontains=search))
+    else:
+        if(mc=="All" and sc=="All" and br=="All"):
+            products = Services.objects.all()
+        elif(mc!="All" and sc=="All" and br=="All"):
+            products = Services.objects.filter(maincategory=Mainservices.objects.get(name=mc))
+        elif(mc=="All" and sc!="All" and br=="All"):
+            products = Services.objects.filter(subcategory=Subservices.objects.get(name=sc))
+        elif(mc=="All" and sc=="All" and br!="All"):
+            products = Services.objects.filter(brand=Brandservices.objects.get(name=br))
+        elif(mc!="All" and sc!="All" and br=="All"):
+            products = Services.objects.filter(maincategory=Mainservices.objects.get(name=mc),subcategory=Subservices.objects.get(name=sc))
+        elif(mc!="All" and sc=="All" and br!="All"):
+            products = Services.objects.filter(maincategory=Mainservices.objects.get(name=mc),brand=Brandservices.objects.get(name=br))
+        elif(mc=="All" and sc!="All" and br!="All"):
+            products = Services.objects.filter(subcategory=Subservices.objects.get(name=sc),brand=Brandservices.objects.get(name=br))
+        else:
+            products = Services.objects.filter(maincategory=Mainservices.objects.get(name=mc),subcategory=Subservices.objects.get(name=sc),brand=Brand.objects.get(name=br))
+    products = products[::-1]
+    return render(request,"service.html",{'Product':products,'Maincategory':maincategory,'Subcategory':subcategory,'Brand':brand,'mc':mc,'sc':sc,'br':br})
+
 def login(request):
     if(request.method=='POST'):
         username = request.POST.get("username")
@@ -86,11 +111,7 @@ def login(request):
 
 def signup(request):
     if(request.method=="POST"):
-        actype = request.POST.get("actype")
-        if(actype=="seller"):
-            u = Seller()
-        else:
-            u = Buyer()
+        u = Buyer()
         u.name = request.POST.get("name")
         u.username = request.POST.get("username")
         u.email = request.POST.get("email")
@@ -136,10 +157,12 @@ def profilePage(request):
             return render(request,"buyerprofile.html",{"User":buyer,'Wishlist':wishlist})
 
 def blog(request):
-    return render(request,"Blog.html")
+    blog = Blog.objects.all()
+    blog = blog[:3:-1]
+    blogs = Blog.objects.all()
+    blogs = blogs[2:5:-1]
+    return render(request,"Blog.html",{'Blog':blog,'Blogs':blogs})
 
-def blogdetails(request):
-    return render(request,"BlogDetails.html")
 
 def history(request):
     try:
@@ -331,10 +354,19 @@ def logout(request):
     return HttpResponseRedirect("/login/")
 
 def singleproduct(request,num):
-    p = Product.objects.get(id=num)
+    try:
+        p = Product.objects.get(id=num)
+    except:
+        p = Services.objects.get(id=num)
     size = p.size.split(",")
     size = size[:-1]
     return render(request,"singleproduct.html",{'Product':p,'Size':size})
+
+def blogdetails(request,num):
+    blog = Blog.objects.get(id=num)
+    blogs = Blog.objects.all()
+    blogs = blogs[2:5:-1]
+    return render(request,"BlogDetails.html",{'Blog':blog,'Blogs':blogs})
 
 def addtowishlist(request,num):
     try:
@@ -390,7 +422,10 @@ def cart(request):
         final = 0
         if(cart):
             for values in cart.values():
-                p = Product.objects.get(id=int(values[0]))
+                try:
+                    p = Product.objects.get(id=int(values[0]))
+                except:
+                    p = Services.objects.get(id=int(values[0]))
                 total=total+p.finalprice*values[1]
             if(len(cart.values())>=1 and total<5000):
                 shipping=150
@@ -431,7 +466,10 @@ def checkout(request):
     final = 0
     if(cart):
         for values in cart.values():
-            p = Product.objects.get(id=int(values[0]))
+            try:
+                p = Product.objects.get(id=int(values[0]))
+            except:
+                p = Services.objects.get(id=int(values[0]))
             total = total+p.finalprice*values[1]
         if(len(cart.values())>=1 and total<5000):
             shipping=150
@@ -451,7 +489,10 @@ def checkout(request):
             check.save()
             for value in cart.values():
                 cp = CheckoutProducts()
-                p = Product.objects.get(id=int(value[0]))
+                try:
+                    p = Product.objects.get(id=int(values[0]))
+                except:
+                    p = Services.objects.get(id=int(values[0]))
                 cp.name=p.name
                 cp.pic=p.pic1.url
                 cp.size=value[2]

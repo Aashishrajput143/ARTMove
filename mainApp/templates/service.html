@@ -1,0 +1,114 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}
+<title>Moonarty | Our Service Page</title>
+{% endblock %}
+{% block home %}
+<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+{% endblock %}
+{% block services %}
+<li class="nav-item"><a class="nav-link active" href="/services/All/All/All/">Services</a></li>
+{% endblock %}
+{% block body %}
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Services Category page</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="/">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="/services/All/All/All/">Services</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-xl-3 col-lg-4 col-md-5">
+            <div class="sidebar-filter mt-0">
+                <div class="top-filter-head">Browse Categories</div>
+                <div class="common-filter">
+                    <div class="head">Maincategory</div>
+                    <div class="list-group">
+                        <a href="/services/All/{{sc}}/{{br}}/" class=" ml-5 mb-2 list-group-item-action">All</a>
+                        {% for i in Maincategory %}
+                        <a href="/services/{{i.name}}/{{sc}}/{{br}}/"
+                            class="ml-5 mt-2 list-group-item-action">{{i.name}}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="common-filter mt-0">
+                    <div class="head">Subcategory </div>
+                    <div class="list-group">
+                        <a href="/services/{{mc}}/All/{{br}}/" class="ml-5 mb-2 list-group-item-action">All</a>
+                        {% for i in Subcategory %}
+                        <a href="/services/{{mc}}/{{i.name}}/{{br}}/"
+                            class="ml-5 mt-2 list-group-item-action">{{i.name}}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="common-filter mt-0">
+                    <div class="head">Brand</div>
+                    <div class="list-group">
+                        <a href="/services/{{mc}}/{{sc}}/All/" class="ml-5 mb-2 list-group-item-action">All</a>
+                        {% for i in Brand %}
+                        <a href="/services/{{mc}}/{{sc}}/{{i.name}}/"
+                            class="ml-5 mt-2 list-group-item-action">{{i.name}}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-9 col-lg-8 col-md-7">
+            <!-- Start Filter Bar -->
+            <div class="filter-bar d-flex flex-wrap align-items-center p-0">
+                <h2 class="text-light text-center pl-5" style="margin-top: 10px; padding-bottom: 3px;">
+                    Latest Services</h2>
+            </div>
+            <!-- End Filter Bar -->
+            <!-- Start Best Seller -->
+            <section class="lattest-product-area category-list">
+                <div class="row">
+                    <!-- single product -->
+                    {% for i in Product %}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-product">
+                            {% if i.pic1 %}
+                            <a href="/singleproduct/{{i.id}}"><img class="img-fluid"
+                                    style="width: 500px; height: 290px;" src="{{i.pic1.url}}" alt=""></a>
+                            {% else %}
+                            <a href="/singleproduct/{{i.id}}"><img class="img-fluid"
+                                    style="width: 500px; height: 290px;" src="{% static 'images/noimagep.png' %}"
+                                    alt=""></a>
+                            {% endif %}
+                            <div class="product-details">
+                                <h6>{{i.name}}</h6>
+                                <div class="price">
+                                    <h6>&#8377;{{i.finalprice}}</h6>
+                                    <h6 class="l-through">&#8377;{{i.baseprice}}</h6>
+                                </div>
+                                <div class="prd-bottom">
+
+                                    <a href="/singleproduct/{{i.id}}" class="social-info">
+                                        <span class="ti-bag"></span>
+                                        <p class="hover-text">add to bag</p>
+                                    </a>
+                                    <a href="/addtowishlist/{{i.id}}" class="social-info">
+                                        <span class="lnr lnr-heart"></span>
+                                        <p class="hover-text">Wishlist</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            <!-- End Best Seller -->
+        </div>
+    </div>
+</div>
+{% endblock %}

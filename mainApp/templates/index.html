@@ -10,7 +10,7 @@
   <meta name="keywords" content="">
   <meta charset="UTF-8">
   {% block title %}
-  <title>Art Move | Home</title>
+  <title>Moonarty | Home</title>
   {% endblock %}
   <link rel="stylesheet" href="{% static 'css/slick.css' %}">
   <link rel="stylesheet" href="{% static 'css/animate.css' %}">
@@ -56,24 +56,21 @@
         <span></span>
         <span></span>
       </div>
-      <form action="/shop/All/All/All/" method="post">
-        {% csrf_token %}
+      <form action="#">
         <input type="text" name="search" placeholder="Search by keyword">
-        <button type="submit"><i class="fa fa-search"></i></button>
+        <button><i class="fa fa-search"></i></button>
       </form>
     </div>
   </div>
-  {% block body %}
-  <!-- Start Header Area -->
   <img class="img-fluid" src="{% static 'img/banner/banner-bg1.jpg' %}" style="height: 60px; width: 100%;" alt="">
   <header id="header-part">
-    <div class="navigation" style="box-shadow: 10px 10px 5px 5px rgba(132, 145, 143, 0.3);">
+    <div class="navigation">
       <div class="container">
         <div class="row">
-          <div class="col-lg-10 col-md-10 col-sm-9 col-8">
+          <div class="col-lg-9 col-md-9 col-sm-9 col-8">
             <nav class="navbar navbar-expand-lg">
               <a class="navbar-brand logo_h fs-4" style="font-weight: 500;" href="/"><img
-                  src="{% static 'img/fav.png' %}" alt=""><span class="ml-4" style="color:black;">ART MOVE</span></a>
+                  src="{% static 'img/fav.png' %}" width="100px" height="60px" alt=""></a>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="icon-bar"></span>
@@ -83,16 +80,30 @@
 
               <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                 <ul class="nav navbar-nav menu_nav ml-auto">
+                  {% block home %}
                   <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+                  {% endblock %}
+                  {% block shop %}
                   <li class="nav-item"><a class="nav-link" href="/shop/All/All/All/">Shop</a></li>
+                  {% endblock %}
+                  {% block services %}
+                  <li class="nav-item"><a class="nav-link" href="/services/All/All/All/">Services</a></li>
+                  {% endblock %}
+                  {% block blog %}
                   <li class="nav-item"><a class="nav-link" href="/blog/">Blog</a></li>
+                  {% endblock %}
+                  {% block history %}
                   <li class="nav-item"><a class="nav-link" href="/history/">Product History</a></li>
+                  {% endblock %}
+                  {% block contact %}
                   <li class="nav-item"><a class="nav-link mr-5" href="/contact/">Contact</a></li>
-              </ul>
+                  {% endblock %}
+                </ul>
                 <ul class="nav navbar-nav navbar-right">
                   <li class="nav-item"><a href="/cart/" class="cart"><span class="ti-bag"></span></a></li>
                 </ul>
               </div>
+            </nav>
           </div>
           <div class="col-1">
             <div class="right-icon text-right">
@@ -101,7 +112,7 @@
               </ul>
             </div>
           </div>
-          <div class="col-1">
+          <div class="col-2">
             <div class="pt-15">
               <ul class="nav navbar-nav menu_nav ml-auto">
                 {% if request.user.is_authenticated %}
@@ -115,55 +126,92 @@
                   </ul>
                 </li>
                 {% else %}
-                <li><a href="/login/" class="btn background text-light" id="search" style="font-weight: 600;">LOGIN</a>
+                {% block login %}
+                <li><a href="/login/" class="btn background text-light" style="font-weight: 600;">LOGIN</a>
                 </li>
+                {% endblock %}
                 {% endif %}
               </ul>
             </div>
           </div>
         </div>
-        </nav>
       </div>
     </div>
   </header>
-
-  <!-- start banner Area -->
-  <section class="banner-area" style="height: 40rem;">
+  {% block body %}
+  <section class="banner-area" style="height: 50rem;">
     <div class="container">
-      <div class="row fullscreen align-items-center justify-content-start">
-        <div class="col-lg-12">
-          <div class="active-banner-slider owl-carousel">
-            <!-- single-slide -->
-            <div class="row single-slide align-items-center d-flex mt-5">
-              <div class="col-lg-5 col-md-6 mt-5">
-                <div class="banner-content">
-                  <h1>Art Move</h1>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                    labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                  <div class="add-bag d-flex align-items-center mt-5">
-                    <a class="add-btn" href="/shop/All/All/All"><span class="lnr lnr-cross"></span></a>
-                    <span class="add-text text-uppercase">Add to Bag</span>
-                  </div>
-                </div>
+      <div class="row align-items-center justify-content-start">
+        <div class="row mt-5">
+          <div class="col-lg-5 col-md-6 mt-5">
+            <h1 style="color: orange;">Moonarty</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+              labore et
+              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+            <div class="add-bag d-flex align-items-center mt-5">
+              <a class="add-btn" href="/shop/All/All/All/"><span class="lnr lnr-cross"></span></a>
+              <span class="add-text text-uppercase">Add to Bag</span>
+            </div>
+          </div>
+          <div class="col-lg-7 mt-3 pl-4 mr-0 pr-0">
+            <div id="carouselExampleIndicators" class="carousel slide" style="height: 650px;" data-bs-ride="carousel">
+              <div class="carousel-indicators" style="margin-bottom: 210px;">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                  aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                  aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                  aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"
+                  aria-label="Slide 4"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4"
+                  aria-label="Slide 5"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5"
+                  aria-label="Slide 6"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="6"
+                  aria-label="Slide 7"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="7"
+                  aria-label="Slide 8"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="8"
+                  aria-label="Slide 9"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="9"
+                  aria-label="Slide 10"></button>
               </div>
-              <div class="col-3">
 
-              </div>
-              <div class="col-lg-4">
-                <div class="banner-img">
-                  <img class="img-fluid" style="width: 100%; height: 390px; border: 10px solid white;" src="{% static 'img/banner/banner-img.jpg' %}"
-                    alt="">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img class="img-fluid" style="width: 800px; height: 450px; border: 10px solid white;"
+                    src="{% static 'img/banner/banner-img.jpg' %}" alt="">
                 </div>
+                {% for i in Products %}
+                <div class="carousel-item">
+                  {% if i.pic1 %}
+                  <a href="/singleproduct/{{i.id}}"><img class="img-fluid"
+                      style="width: 800px; height: 450px; border: 10px solid white;" src="{{i.pic1.url}}" alt=""></a>
+                  {% else %}
+                  <img class="img-fluid" style="width: 800px; height: 450px; border: 10px solid white;"
+                    src="{% static 'img/banner/banner-img.jpg' %}" alt="">
+                  {% endif %}
+                </div>
+                {% endfor %}
               </div>
+
+              <button class="carousel-control-prev" style="margin-bottom: 200px;" type="button"
+                data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" style="margin-bottom: 200px;" type="button"
+                data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
   </section>
-  <!-- End banner Area -->
-
   <!-- start features Area -->
   <section class="features-area section_gap">
     <div class="container">
@@ -223,44 +271,24 @@
               <div class="single-deal">
                 <div class="overlay"></div>
                 <img class="img-fluid w-100" style="height: 200px;" src="{% static 'img/category/g3.jpg' %} " alt="">
-                <a href="{% static 'img/category/g3.jpg' %}" class="img-pop-up" target="_blank">
-                  <div class="deal-details">
-                    <h6 class="deal-title">Best Painting for Couples</h6>
-                  </div>
-                </a>
               </div>
             </div>
             <div class="col-lg-4 col-md-4">
               <div class="single-deal">
                 <div class="overlay"></div>
                 <img class="img-fluid w-100" style="height: 200px;" src="{% static 'img/category/g4.jpg' %}" alt="">
-                <a href="{% static 'img/category/g4.jpg' %}" class="img-pop-up" target="_blank">
-                  <div class="deal-details">
-                    <h6 class="deal-title">Lovers Painting</h6>
-                  </div>
-                </a>
               </div>
             </div>
             <div class="col-lg-4 col-md-4">
               <div class="single-deal">
                 <div class="overlay"></div>
-                <img class="img-fluid w-100" style="height: 200px;" src="{% static 'img/category/g5.jpg' %}" alt="">
-                <a href="{% static 'img/category/g5.jpg' %}" class="img-pop-up" target="_blank">
-                  <div class="deal-details">
-                    <h6 class="deal-title">Product for Couple</h6>
-                  </div>
-                </a>
+                <img class="img-fluid w-100" style="height: 220px;" src="{% static 'img/category/g5.jpg' %}" alt="">
               </div>
             </div>
             <div class="col-lg-8 col-md-8">
               <div class="single-deal">
                 <div class="overlay"></div>
-                <img class="img-fluid w-100" style="height: 200px;" src="{% static 'img/category/g7.jpg' %}" alt="">
-                <a href="{% static 'img/category/g7.jpg' %}" class="img-pop-up" target="_blank">
-                  <div class="deal-details">
-                    <h6 class="deal-title">Best Painting for wall Decoration</h6>
-                  </div>
-                </a>
+                <img class="img-fluid w-100" style="height: 220px;" src="{% static 'img/category/g7.jpg' %}" alt="">
               </div>
             </div>
           </div>
@@ -269,11 +297,6 @@
           <div class="single-deal">
             <div class="overlay"></div>
             <img class="img-fluid w-100" style="height: 450px;" src="{% static 'img/category/c5.jpg' %}" alt="">
-            <a href="{% static 'img/category/c5.jpg' %}" class="img-pop-up" target="_blank">
-              <div class="deal-details">
-                <h6 class="deal-title">Black Friday SuperSales</h6>
-              </div>
-            </a>
           </div>
         </div>
       </div>
@@ -282,7 +305,7 @@
   <!-- End category Area -->
 
   <!-- start product Area -->
-  <section class="owl-carousel active-product-area section_gap">
+  <section class="mt-1">
     <!-- single product slide -->
     <div class="single-product-slider">
       <div class="container">
@@ -290,22 +313,20 @@
           <div class="col-lg-6 text-center">
             <div class="section-title">
               <h1>Latest Products</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore
-                magna aliqua.</p>
+              <p>Everything you need to know. “Everything You Need To Know About Boosting Your Productivity”</p>
             </div>
           </div>
         </div>
         <div class="row">
           <!-- single product -->
           {% for i in Products %}
-          <div class="col-lg-3 col-md-6">
+          <div class="col-lg-3 col-md-4 col-sm-6">
             <div class="single-product">
               {% if i.pic1 %}
-              <a href="/singleproduct/{{i.id}}"><img class="img-fluid" style="width: fit-content; height: 290px;"
+              <a href="/singleproduct/{{i.id}}"><img class="img-fluid" style="width: 500px; height: 290px;"
                   src="{{i.pic1.url}}" alt=""></a>
               {% else %}
-              <a href="/singleproduct/{{i.id}}"><img class="img-fluid" style="width: fit-content; height: 290px;"
+              <a href="/singleproduct/{{i.id}}"><img class="img-fluid" style="width: 500px; height: 290px;"
                   src="{% static 'images/noimagep.png' %}" alt=""></a>
               {% endif %}
               <div class="product-details">
@@ -339,7 +360,7 @@
   <section class="exclusive-deal-area">
     <div class="container-fluid">
       <div class="row justify-content-center align-items-center">
-        <div class="col-lg-6 no-padding exclusive-left">
+        <div class="col-lg-12 no-padding exclusive-left">
           <div class="row clock_sec clockdiv" id="clockdiv">
             <div class="col-lg-12">
               <h1>Exclusive Hot Deal Ends Soon!</h1>
@@ -347,35 +368,6 @@
             </div>
           </div>
           <a href="/shop/All/All/All/" class="primary-btn">Shop Now</a>
-        </div>
-        <div class="col-lg-6 no-padding exclusive-right">
-          <!-- single exclusive carousel -->
-          <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner mt-1">
-              {% for i in Title %}
-              <div class="carousel-item active">
-                {% if i.pic1 %}
-                <a href="/singleproduct/{{i.id}}"><img class="img-fluid" style="width:590px; height: 590px;"
-                    src="{{i.pic1.url}}" alt=""></a>
-                {% else %}
-                <a href="/singleproduct/{{i.id}}"><img class="img-fluid" style="width: 490px; height: 590px;"
-                    src="{% static 'images/noimagep.png' %}" alt=""></a>
-                {% endif %} 
-                <div class="product-details">
-                  <div class="price">
-                    <h6>&#8377;{{i.finalprice}}</h6>
-                    <h6 class="l-through">&#8377;{{i.baseprice}}</h6>
-                  </div>
-                  <h4>{{i.name}}</h4>
-                  <div class="add-bag d-flex align-items-center justify-content-center">
-                    <a class="add-btn" href="/singleproduct/{{i.id}}"><span class="ti-bag"></span></a>
-                    <span class="add-text text-uppercase">Add to Bag</span>
-                  </div>
-                </div>
-              </div>
-              {% endfor %}
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -413,9 +405,8 @@
         <div class="col-lg-6 text-center">
           <div class="section-title">
             <h1>Deals of the Week</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore
-              magna aliqua.</p>
+            <p>Time is ticking, but the savings keep clicking with deal of the week, Come for the deal, stay for the savings
+            </p>
           </div>
         </div>
       </div>
@@ -426,12 +417,12 @@
             <div class="col-lg-4 col-md-4 col-sm-6 mb-20">
               <div class="single-related-product d-flex">
                 {% if i.pic1 %}
-                <a href="/singleproduct/{{i.id}}"><img style="width:70px; height: 80px;"
-                    src="{{i.pic1.url}}" alt=""></a>
+                <a href="/singleproduct/{{i.id}}"><img style="width:70px; height: 80px;" src="{{i.pic1.url}}"
+                    alt=""></a>
                 {% else %}
                 <a href="/singleproduct/{{i.id}}"><img style="width: 190px; height: 190px;"
                     src="{% static 'images/noimagep.png' %}" alt=""></a>
-                {% endif %}                
+                {% endif %}
                 <div class="desc">
                   <a href="#" class="title">{{i.name}}</a>
                   <div class="price">
@@ -446,7 +437,7 @@
         </div>
         <div class="col-lg-3">
           <div class="ctg-right">
-            <a href="#" target="_blank">
+            <a href="#">
               <img class="img-fluid d-block mx-auto" src="{% static 'img/category/c5.jpg' %}" alt="">
             </a>
           </div>
@@ -460,14 +451,17 @@
   <footer class="footer-area section_gap">
     <div class="container">
       <div class="row">
-        <div class="col-lg-3  col-md-6 col-sm-6">
+        <div class="col-lg-2 col-md-6 col-sm-6">
           <div class="single-footer-widget">
-            <h6>About Us</h6>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-              dolore
-              magna aliqua.
-            </p>
+            <h6>Follow Us</h6>
+            <p>Let us be social</p>
+            <div class="footer-social d-flex align-items-center">
+              <a href="https://www.facebook.com/profile.php?id=100066828451615&mibextid=ZbWKwL"><i
+                  class="fa fa-facebook"></i></a>
+              <a href="#"><i class="fa fa-twitter"></i></a>
+              <a href="#"><i class="fa fa-dribbble"></i></a>
+              <a href="#"><i class="fa fa-behance"></i></a>
+            </div>
           </div>
         </div>
         <div class="col-lg-4  col-md-6 col-sm-6">
@@ -508,22 +502,18 @@
             </ul>
           </div>
         </div>
-        <div class="col-lg-2 col-md-6 col-sm-6">
+        <div class="col-lg-3  col-md-6 col-sm-6">
           <div class="single-footer-widget">
-            <h6>Follow Us</h6>
-            <p>Let us be social</p>
-            <div class="footer-social d-flex align-items-center">
-              <a href="#"><i class="fa fa-facebook"></i></a>
-              <a href="#"><i class="fa fa-twitter"></i></a>
-              <a href="#"><i class="fa fa-dribbble"></i></a>
-              <a href="#"><i class="fa fa-behance"></i></a>
-            </div>
+            <h6>Sell Your Products </h6>
+            <p>
+              Selling Your products? please contact to our administrator.
+            </p>
           </div>
         </div>
       </div>
       <div class="footer-bottom d-flex justify-content-center align-items-center flex-wrap">
         <p class="footer-text m-0">
-          Copyright All rights reserved | <span style="color: chocolate;"> ArtMove <i class="fa fa-heart-o"
+          Copyright All rights reserved | <span style="color: chocolate;"> Moonarty <i class="fa fa-heart-o"
               aria-hidden="true"></i></span></p>
       </div>
     </div>
@@ -546,6 +536,7 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
   <script src="{% static 'js/gmaps.min.js' %}"></script>
   <script src="{% static 'js/main.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

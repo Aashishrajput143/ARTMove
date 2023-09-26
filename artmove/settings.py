@@ -77,12 +77,8 @@ WSGI_APPLICATION = 'artmove.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ArtMove',
-        'HOST':"Localhost",
-        'PORT':'3306',
-        'USER':'root',
-        'PASSWORD':'root',   
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
