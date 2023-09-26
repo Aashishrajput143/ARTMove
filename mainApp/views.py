@@ -158,9 +158,9 @@ def profilePage(request):
 
 def blog(request):
     blog = Blog.objects.all()
-    blog = blog[:3:-1]
+    blog = blog[::-1]
     blogs = Blog.objects.all()
-    blogs = blogs[2:5:-1]
+    blogs = Blog.objects.order_by('-id')[:5]
     return render(request,"Blog.html",{'Blog':blog,'Blogs':blogs})
 
 
@@ -365,7 +365,7 @@ def singleproduct(request,num):
 def blogdetails(request,num):
     blog = Blog.objects.get(id=num)
     blogs = Blog.objects.all()
-    blogs = blogs[2:5:-1]
+    blogs = Blog.objects.order_by('-id')[:5]
     return render(request,"BlogDetails.html",{'Blog':blog,'Blogs':blogs})
 
 def addtowishlist(request,num):
